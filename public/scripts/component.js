@@ -68,3 +68,54 @@ setInterval(function () {
     throw error;
   });
 }, 500);
+
+const statForm = document.getElementById("stat-form");
+const teamName = document.getElementById("team-name");
+const match = document.getElementById("mmatch");
+const info = document.getElementById("info");
+const infoBox = document.getElementById("infobox")
+
+statBtn.onclick = function () {
+  statSec.style.display = "block";
+  comsSec.style.display = "none";
+  teamSec.style.display = "none";
+}
+
+statForm.onsubmit = function () {
+  event.preventDefault();
+
+  fetch ("/stat", {
+    method : "POST",
+    headers : {
+      "Content-Type" : "application/json"
+    },
+    body : JSON.stringify({
+      team : teamName.value,
+      match : match.value,
+      info : info.value
+    })
+  })
+  .then(response => response.text())
+  .then(data => {
+    console.log(data);
+    alert(data);
+    info.value = "";
+    teamName.value = "";
+    match.value = "";
+  })
+  .catch(error => {
+    alert(error);
+    throw error;
+  })
+}
+
+setInterval(function () {
+  fetch ("/stat")
+  .then(response => response.text())
+  .then(data => {
+    infobox.innerHTML = data;
+  })
+  .catch(error => {
+    throw error;
+  });
+}, 500);

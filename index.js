@@ -15,6 +15,18 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const Database = require("@replit/database");
 const db = new Database();
 
+let stat_data = "";
+
+db.get("stat").then(value => {
+  stat_data = value;
+});
+
+setInterval(function () { 
+  db.set("stat", stat_data).then(() => {
+    // Don't do anything here because it floods the console if you log anything!
+  });
+}, 500);
+
 app.get('', function (req, res) {
   const index = __dirname + '/public/static/index.html';
 
@@ -25,6 +37,31 @@ app.post('/stat', function (req, res) {
   const team_num = req.body.team;
   const match = req.body.match;
   const info = req.body.info;
+
+  const clean_team_num = sanitizer.escape(team_num);
+  const clean_match = sanitizer.escape(match);
+  const clean_info = sanitizer.escape(info);
+
+  if (clean_team_num === "" || clean_team_num === null || clean_team_num === undefined) {
+    clean_team_num = "No team number given.";
+  }
+
+  if (clean_match === "" || clean_match === null || clean_match === undefined) {
+    clean_match = "No match given.";
+  }
+  
+  if (clean_info === "" || clean_info === null || clean_info === undefined) {
+    clean_info = "No information given.";
+  }
+
+  stat_data = "<b>Team Name: " + clean_team_num + "</b><p>Match info: " + clean_match + "</p><hr/><p>Info gained: " + clean_info + "</p>" + stat_data;
+  
+  console.log("done!");
+  res.send("success!");
+});
+
+app.get('/stat', function (req, res) {
+  res.send(stat_data);
 });
 
 let chatbox = "";
