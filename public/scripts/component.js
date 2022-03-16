@@ -71,7 +71,7 @@ setInterval(function () {
 
 const statForm = document.getElementById("stat-form");
 const teamName = document.getElementById("team-name");
-const match = document.getElementById("mmatch");
+const match = document.getElementById("match");
 const info = document.getElementById("info");
 const infoBox = document.getElementById("infobox")
 
