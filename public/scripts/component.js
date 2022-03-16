@@ -98,13 +98,11 @@ statForm.onsubmit = function () {
   .then(response => response.text())
   .then(data => {
     console.log(data);
-    alert(data);
     info.value = "";
     teamName.value = "";
     match.value = "";
   })
   .catch(error => {
-    alert(error);
     throw error;
   })
 }
