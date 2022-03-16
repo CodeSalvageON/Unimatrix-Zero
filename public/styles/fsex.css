@@ -1,5 +1,6 @@
 #pip {
   width: 400px;
   height: 400px;
+  overflow-y: auto;
   background-color: darkgreen;
 }

@@ -35,6 +35,9 @@ app.post('/chat', function (req, res) {
 
   const clean_user = sanitizer.escape(chat_user);
   const clean_msg = sanitizer.escape(msg);
+
+  chatbox = "<b>" + clean_user + "</b><hr><p>" + clean_msg + "</p>" + chatbox;
+  res.send("success!");
 });
 
 app.get('/chat', function (req, res) {
